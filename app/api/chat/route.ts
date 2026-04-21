@@ -4,6 +4,7 @@ import { generateBCAnswer } from "@/lib/gemini";
 type ChatRequestBody = {
   message?: string;
   persona?: string;
+  fileContent?: string;
 };
 
 export async function POST(req: Request) {
@@ -11,6 +12,7 @@ export async function POST(req: Request) {
     const body = (await req.json()) as ChatRequestBody;
     const message = body.message?.trim();
     const persona = body.persona?.trim() || "consultant";
+    const fileContent = body.fileContent?.trim();
 
     if (!message) {
       return NextResponse.json(
@@ -19,7 +21,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const response = await generateBCAnswer(message, persona);
+    const response = await generateBCAnswer(message, persona, fileContent);
     return NextResponse.json(response);
   } catch (error) {
     const msg =

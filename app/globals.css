@@ -10,6 +10,7 @@
   --muted: 218 22% 70%;
   --accent: 190 88% 58%;
   --accent-2: 268 76% 67%;
+  --accent-3: 35 90% 60%;
   --border: 220 25% 25%;
 }
 
@@ -22,9 +23,9 @@ body {
   font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   color: hsl(var(--text));
   background:
-    radial-gradient(circle at 10% -10%, hsla(190, 85%, 55%, 0.2), transparent 34%),
-    radial-gradient(circle at 95% 110%, hsla(268, 75%, 65%, 0.18), transparent 42%),
-    radial-gradient(circle at 50% 35%, hsla(205, 70%, 45%, 0.08), transparent 40%),
+    radial-gradient(circle at 10% -10%, hsla(190, 85%, 55%, 0.15), transparent 34%),
+    radial-gradient(circle at 95% 110%, hsla(268, 75%, 65%, 0.12), transparent 42%),
+    radial-gradient(circle at 50% 35%, hsla(205, 70%, 45%, 0.05), transparent 40%),
     hsl(var(--base));
 }
 
@@ -37,5 +38,5 @@ h3 {
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: hsla(190, 85%, 58%, 0.45) hsla(220, 25%, 25%, 0.2);
+  scrollbar-color: hsla(190, 85%, 58%, 0.3) hsla(220, 25%, 25%, 0.1);
 }

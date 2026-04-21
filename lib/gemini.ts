@@ -9,7 +9,7 @@ const personaInstructions: Record<string, string> = {
     "Respond as a finance controller: prioritize posting impact, controls, and auditability."
 };
 
-export async function generateBCAnswer(userPrompt: string, persona = "consultant") {
+export async function generateBCAnswer(userPrompt: string, persona = "consultant", fileContent?: string) {
   const primaryKey = process.env.GROQ_API_KEY;
   const fallbackKey = process.env.GROQ_API_KEY_FALLBACK;
   const apiKeys = [primaryKey, fallbackKey].filter(Boolean) as string[];
@@ -19,9 +19,14 @@ export async function generateBCAnswer(userPrompt: string, persona = "consultant
   const context = retrieveBCContext(userPrompt);
   const personaHint = personaInstructions[persona] ?? personaInstructions.consultant;
 
+  const fileContextString = fileContent 
+    ? `\n<Customer_Requirements_File>\n${fileContent}\n</Customer_Requirements_File>\n` 
+    : "";
+
   const prompt = `
 You are AetherBC Nexus, a senior Microsoft Dynamics 365 Business Central assistant.
 Use retrieved context first, then your own knowledge.
+${fileContent ? "PRIORITIZE the user's provided <Customer_Requirements_File> in your answer." : ""}
 Respond in clean markdown.
 When relevant, include short AL snippets or BC formula-style examples.
 ${personaHint}
@@ -30,7 +35,7 @@ Retrieved context:
 ${context
   .map((c, i) => `${i + 1}. [${c.doc.topic}] ${c.doc.title}\n${c.doc.content}`)
   .join("\n\n")}
-
+${fileContextString}
 User question:
 ${userPrompt}
 `;
